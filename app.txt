@@ -1,0 +1,43 @@
+   import { ethers } from 'ethers';
+   import React, { useEffect, useState } from 'react';
+   import FertilizerSupplyChain from './artifacts/contracts/FertilizerSupplyChain.sol/FertilizerSupplyChain.json'; // Adjust the path as necessary
+
+   const App = () => {
+       const [contract, setContract] = useState(null);
+       const [provider, setProvider] = useState(null);
+
+       useEffect(() => {
+           const init = async () => {
+               // Connect to Ethereum
+               const provider = new ethers.providers.Web3Provider(window.ethereum);
+               await provider.send("eth_requestAccoun
+               
+               ts", []); // Request account access
+               const signer = provider.getSigner();
+
+               // Create contract instance
+               const contractAddress = "YOUR_DEPLOYED_CONTRACT_ADDRESS"; // Replace with your deployed contract address
+               const contractInstance = new ethers.Contract(contractAddress, FertilizerSupplyChain.abi, signer);
+               setContract(contractInstance);
+               setProvider(provider);
+           }; //function to connect wallet and get the signer 
+
+           init(); //run the function 
+       }, []);
+
+       // Example function to register a manufacturer
+       const registerManufacturer = async (name, businessName, rcNumber, locationAddress) => {
+           const tx = await contract.registerManufacturer(name, businessName, rcNumber, locationAddress);
+           await tx.wait(); // Wait for the transaction to be mined
+           console.log("Manufacturer registered!");
+       };
+
+       return (
+           <div>
+               <h1>Fertilizer Supply Chain</h1>
+               {/* Add UI elements to interact with the contract */}
+           </div>
+       );
+   };
+
+   export default App;

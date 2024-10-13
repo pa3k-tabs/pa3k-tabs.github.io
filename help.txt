@@ -1,0 +1,7 @@
+  contractInstance.events.ManufacturerRegistered()
+      .on('data', (event) => {
+          console.log(event.returnValues.message); // Access the message from the event
+      })
+      .on('error', console.error);
+
+FertilizerSupplyChain deployed to: 0x05624A5a5b19A077c94E1535a8DfBAfcfA465caF
